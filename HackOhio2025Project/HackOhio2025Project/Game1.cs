@@ -5,14 +5,19 @@ using System.Collections.Generic;
 using HackOhio2025Project.Command;
 using HackOhio2025Project.InputController;
 using HackOhio2025Project.ObjectHandler;
+using HackOhio2025Project.Render;
+using System.Diagnostics;
 
 namespace HackOhio2025Project {
     public class Game1 : Game {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private List<IController> controllerList;
+        private VertexPositionColor[] vertices;
 
         private Rectangles rectangleHandler;
+
+        private RenderEffects renderer;
 
         public Game1(){
             _graphics = new GraphicsDeviceManager(this);
@@ -23,7 +28,17 @@ namespace HackOhio2025Project {
         protected override void Initialize(){
             controllerList = new List<IController>();
             rectangleHandler = new Rectangles(GraphicsDevice.Viewport.AspectRatio, GraphicsDevice, Color.Green);
+            renderer = new RenderEffects(GraphicsDevice.Viewport.AspectRatio, GraphicsDevice);
             controllerList.Add(new MouseController(rectangleHandler));
+            vertices = new VertexPositionColor[3];
+            vertices = new VertexPositionColor[]{
+                new VertexPositionColor(new Vector3(0, 0, 0), Color.Red),
+                new VertexPositionColor(new Vector3(0, 20, 0), Color.Red),
+                new VertexPositionColor(new Vector3(35, 0, 0), Color.Red),
+            };
+            renderer.AddTriangle(vertices);
+            Debug.WriteLine("Width: " + GraphicsDevice.Viewport.Width);
+            Debug.WriteLine("Height: " + GraphicsDevice.Viewport.Height);
             base.Initialize();
         }
 
@@ -47,6 +62,7 @@ namespace HackOhio2025Project {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             rectangleHandler.Draw(GraphicsDevice);
+            renderer.Draw(GraphicsDevice);
 
             base.Draw(gameTime);
         }

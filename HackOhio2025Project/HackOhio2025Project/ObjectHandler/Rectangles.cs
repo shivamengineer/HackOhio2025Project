@@ -20,6 +20,9 @@ namespace HackOhio2025Project.ObjectHandler {
 
         private Color selectedColor;
 
+        private float SCALEX = 11.42857f;
+        private float SCALEY = 12f;
+
         public Rectangles(float viewport, GraphicsDevice graphicsDevice, Color startColor) {
             worldMatrix = Matrix.Identity;
             viewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, 50), Vector3.Zero, Vector3.Up);
@@ -47,10 +50,14 @@ namespace HackOhio2025Project.ObjectHandler {
         }
 
         private void createRectangle(int x, int y, int width, int height) {
-            creationRectangle[0] = new VertexPositionColor(new Vector3(x, y, 0), selectedColor);
-            creationRectangle[1] = new VertexPositionColor(new Vector3(x + width, y, 0), selectedColor);
-            creationRectangle[2] = new VertexPositionColor(new Vector3(x + width, y + height, 0), selectedColor);
-            creationRectangle[3] = new VertexPositionColor(new Vector3(x, y + height, 0), selectedColor);
+            float newX = (x / SCALEX) - 35f;
+            float newY = -(y / SCALEY) + 20;
+            float newWidth = (width / SCALEX);
+            float newHeight = -(height / SCALEY);
+            creationRectangle[0] = new VertexPositionColor(new Vector3(newX, newY, 0), selectedColor);
+            creationRectangle[1] = new VertexPositionColor(new Vector3(newX + newWidth, newY, 0), selectedColor);
+            creationRectangle[2] = new VertexPositionColor(new Vector3(newX + newWidth, newY + newHeight, 0), selectedColor);
+            creationRectangle[3] = new VertexPositionColor(new Vector3(newX, newY + newHeight, 0), selectedColor);
         }
 
         public void startCreatingRectangle(int x, int y) {
@@ -91,14 +98,13 @@ namespace HackOhio2025Project.ObjectHandler {
         }
 
         private void DrawRect(GraphicsDevice graphicsDevice, VertexPositionColor[] rectangle) {
-            Debug.WriteLine(rectangle);
             VertexPositionColor[] triangle1 = {
                 rectangle[0],
                 rectangle[1],
                 rectangle[2]
             };
             VertexPositionColor[] triangle2 = {
-                    rectangle[1],
+                    rectangle[0],
                     rectangle[2],
                     rectangle[3]
             };
