@@ -15,6 +15,7 @@ namespace HackOhio2025Project.ObjectHandler {
 
         private List<VertexPositionColor[]> createdRectangles;
         private VertexPositionColor[] creationRectangle;
+        private RectangleDictionary rectangleDictionary;
         private int startX;
         private int startY;
 
@@ -23,7 +24,7 @@ namespace HackOhio2025Project.ObjectHandler {
         private float SCALEX = 11.42857f;
         private float SCALEY = 12f;
 
-        public Rectangles(float viewport, GraphicsDevice graphicsDevice, Color startColor) {
+        public Rectangles(float viewport, GraphicsDevice graphicsDevice, RectangleDictionary rectDict, Color startColor) {
             worldMatrix = Matrix.Identity;
             viewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, 50), Vector3.Zero, Vector3.Up);
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, viewport, 1.0f, 300.0f);
@@ -39,6 +40,8 @@ namespace HackOhio2025Project.ObjectHandler {
             basicEffect.VertexColorEnabled = true;
 
             basicEffect.EnableDefaultLighting();
+
+            rectangleDictionary = rectDict;
 
             createdRectangles = new List<VertexPositionColor[]>();
             creationRectangle = new VertexPositionColor[4];

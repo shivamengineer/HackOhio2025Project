@@ -16,6 +16,7 @@ namespace HackOhio2025Project {
         private VertexPositionColor[] vertices;
 
         private Rectangles rectangleHandler;
+        private RectangleDictionary rectangleDictionary;
 
         private RenderEffects renderer;
 
@@ -27,10 +28,11 @@ namespace HackOhio2025Project {
 
         protected override void Initialize(){
             controllerList = new List<IController>();
-            rectangleHandler = new Rectangles(GraphicsDevice.Viewport.AspectRatio, GraphicsDevice, Color.Green);
+            rectangleDictionary = new RectangleDictionary();
+            rectangleHandler = new Rectangles(GraphicsDevice.Viewport.AspectRatio, GraphicsDevice, rectangleDictionary, Color.Green);
             renderer = new RenderEffects(GraphicsDevice.Viewport.AspectRatio, GraphicsDevice);
             controllerList.Add(new MouseController(rectangleHandler));
-            vertices = new VertexPositionColor[3];
+            /*vertices = new VertexPositionColor[3];
             vertices = new VertexPositionColor[]{
                 new VertexPositionColor(new Vector3(0, 0, 0), Color.Red),
                 new VertexPositionColor(new Vector3(0, 20, 0), Color.Red),
@@ -38,7 +40,7 @@ namespace HackOhio2025Project {
             };
             renderer.AddTriangle(vertices);
             Debug.WriteLine("Width: " + GraphicsDevice.Viewport.Width);
-            Debug.WriteLine("Height: " + GraphicsDevice.Viewport.Height);
+            Debug.WriteLine("Height: " + GraphicsDevice.Viewport.Height);*/
             base.Initialize();
         }
 
